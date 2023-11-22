@@ -13,7 +13,7 @@ class Person:
         self.family_name: str = kwargs['family_name']
         self.number = kwargs["number"]
         self.patronymic: str = kwargs['patronymic']
-        self.last_year: str = kwargs['last_year']
+        self.last_year: set[str] = set(kwargs['last_year'].split(","))
         self.giftee: Optional['Person'] = None
 
     @property
@@ -44,7 +44,7 @@ def same_person(p1: Person, p2: Person) -> bool:
 
 
 def same_as_last_year(p1: Person, p2: Person) -> bool:
-    return p1.last_year == p2.full_name
+    return p2.full_name in p1.last_year
 
 
 def convert_to_csv(filename: str, complete_set):
