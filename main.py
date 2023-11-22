@@ -1,10 +1,8 @@
 import csv
 import itertools
-import random
 from typing import Iterable, Optional, Generator
 
 from munkres import Munkres, DISALLOWED
-import math
 
 
 class Person:
@@ -73,7 +71,7 @@ def batched(iterable, n) -> Generator[list[tuple[Person, Person]], None, None]:
 
 def main(file_name: str):
     with open(file_name) as my_file:
-        reader = csv.DictReader(my_file)
+        reader: Iterable[dict] = csv.DictReader(my_file)
         people = [Person(**data) for data in reader]
     all_pairs = [batch for batch in batched(itertools.product(people, repeat=2), len(people))]
     scores = [[score(*pair) for pair in row] for row in all_pairs]
@@ -91,11 +89,11 @@ def main(file_name: str):
     print(match_list)
     fieldnames = list(reader.fieldnames)
     fieldnames.append("this_year")
-    with open("2022-outcomes.csv", "w") as out:
+    with open("2023-outcomes.csv", "w") as out:
         writer = csv.DictWriter(out, fieldnames)
         writer.writeheader()
         for row in match_list:
             writer.writerow(row)
 
 
-main("2022-participants.csv")
+main("2023-participants.csv")
