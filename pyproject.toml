@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "secret-santa"
+version = "0.1.0"
+description = ""
+authors = ["jonathan <jonodrew@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{ include = "secret_santa" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+munkres = "^1.1.4"
+twilio = "^7.15.1"
+pytest = "^7.2.0"
+click = "^8.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+secret-santa = "secret_santa.command_line:secret_santa"
+reminder = "secret_santa.command_line:reminder"
