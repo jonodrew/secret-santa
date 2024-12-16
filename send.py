@@ -1,5 +1,6 @@
 import csv
 import os
+
 from twilio.rest import Client
 
 
@@ -33,16 +34,19 @@ def send(recipient_number: str, gifter_name: str, giftee_name: str, client: Clie
     print(message.sid)
 
 
-def reminder(recipient_number: str, gifter_name: str, client: Client):
+def reminder(recipient_number: str, gifter_name: str, client: Client, dry_run=True):
     message_body = f"Dear {gifter_name}, Merry Christmas! There's not long now until the big day, so if you haven't " \
                    f"already done it please tell your Secret Santa what you want via the WhatsApp group. " \
                    f"Lots of love, Santa"
-    message = client.messages.create(
-        body=message_body,
-        from_='Santa Kerr',
-        to=recipient_number
-    )
-    print(message.sid)
+    if not dry_run:
+        message = client.messages.create(
+            body=message_body,
+            from_='Santa Kerr',
+            to=recipient_number
+        )
+        print(message.sid)
+    else:
+        print(f"Dry run: Sent reminder to {gifter_name}.")
 
 
 def mass_reminder(filename:str):
